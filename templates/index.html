@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crop Prediction Model</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+
+        /* --------------------- Global Styles --------------------- */
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Poppins", sans-serif;
+            background: url('{{ url_for("static", filename="crop_picture.jpeg") }}') no-repeat center center fixed;
+            background-size: cover;
+            color: #ffffff;
+        }
+
+        :root {
+            --main-bg: rgba(255, 255, 255, 0.15);
+            --main-text: #ffffff;
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --button-bg: linear-gradient(45deg, #0f9d58, #34a853);
+            --dark-bg: rgba(0, 0, 0, 0.4);
+        }
+
+        /* --------------------- Navbar --------------------- */
+
+        .navbar {
+            width: 100%;
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(14px);
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            border-bottom: 2px solid var(--glass-border);
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        /* --------------------- Main Layout --------------------- */
+
+        .overlay {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .glass-card {
+            width: 520px;
+            background: var(--main-bg);
+            padding: 35px;
+            border-radius: 40px;
+            backdrop-filter: blur(16px);
+            border: 2px solid var(--glass-border);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            animation: fadeUp 1.3s ease-out;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            text-align: center;
+            font-weight: 500;
+            font-size: 28px;
+            margin-bottom: 25px;
+        }
+
+        /* --------------------- Input Fields --------------------- */
+
+        .input-box {
+            position: relative;
+            margin-top: 12px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .input-box input {
+            width: 78%;
+            padding: 12px 15px 12px 42px;
+            background: rgba(255, 255, 255, 0.95);
+            border: none;
+            font-size: 15px;
+            border-radius: 10px;
+            outline: none;
+            color: #333;
+        }
+
+        .input-box i {
+            position: absolute;
+            left: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+        }
+
+        /* --------------------- Button --------------------- */
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 30px;
+            background: var(--button-bg);
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        /* --------------------- Result Box --------------------- */
+
+        .result {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 600;
+            color: #d4ffd9;
+            text-shadow: 0 0 8px rgba(0,0,0,0.8);
+        }
+
+        /* --------------------- Footer --------------------- */
+
+        .footer {
+            text-align: center;
+            color: #fff;
+            margin-top: 30px;
+            opacity: 0.8;
+            font-size: 14px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<!-- --------------------- NAVBAR --------------------- -->
+<div class="navbar">
+    <div class="logo">🌾 Crop Predictor</div>
+</div>
+
+<!-- --------------------- MAIN CONTENT --------------------- -->
+
+<div class="overlay">
+    <div class="glass-card">
+
+        <h2>Crop Prediction Model</h2>
+
+        <form action="/predict" method="POST">
+
+            <div class="input-box"><i>🌱</i><input type="number" name="N" placeholder="Nitrogen (N)" required></div>
+            <div class="input-box"><i>🌿</i><input type="number" name="P" placeholder="Phosphorus (P)" required></div>
+            <div class="input-box"><i>🍃</i><input type="number" name="K" placeholder="Potassium (K)" required></div>
+            <div class="input-box"><i>🌡️</i><input type="number" name="temperature" placeholder="Temperature" required></div>
+            <div class="input-box"><i>💧</i><input type="number" name="humidity" placeholder="Humidity" required></div>
+            <div class="input-box"><i>🧪</i><input type="number" name="ph" placeholder="Soil pH" required></div>
+            <div class="input-box"><i>☔</i><input type="number" name="rainfall" placeholder="Rainfall" required></div>
+
+            <button type="submit">Predict Crop</button>
+        </form>
+
+        {% if result %}
+            <div class="result">🌱 Recommended Crop: {{ result }}</div>
+        {% endif %}
+
+        <div class="footer">© 2025 Crop Predictor by Prachi & Aishwarya</div>
+
+    </div>
+</div>
+
+</body>
+</html>
